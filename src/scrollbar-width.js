@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-15 17:23:36
- * @LastEditTime: 2020-07-15 17:23:45
+ * @LastEditTime: 2020-07-16 15:44:32
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -16,7 +16,6 @@ let scrollBarWidth
 export default function () {
   if (Vue.prototype.$isServer) return 0
   if (scrollBarWidth !== undefined) return scrollBarWidth
-
   const outer = document.createElement('div')
   outer.className = 'el-scrollbar__wrap'
   outer.style.visibility = 'hidden'

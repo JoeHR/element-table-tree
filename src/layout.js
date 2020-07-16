@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-08 16:18:29
- * @LastEditTime: 2020-07-15 17:24:05
+ * @LastEditTime: 2020-07-16 15:46:28
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -11,7 +11,7 @@
  */
 
 import Vue from 'vue'
-import scrollbarWidth from './scrollbar-width'
+// import scrollbarWidth from './scrollbar-width'
 
 class TableTreeLayout {
   constructor (options) {
@@ -31,7 +31,7 @@ class TableTreeLayout {
     this.headerHeight = 44
     this.bodyHeight = null
     this.fixedBodyHeight = null
-    this.gutterWidth = scrollbarWidth()
+    this.gutterWidth = false
 
     for (const name in options) {
       if (Object.prototype.hasOwnProperty.call(options, name)) {

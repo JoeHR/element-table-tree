@@ -1,7 +1,7 @@
 <!--
  * @Author: rh
  * @Date: 2020-07-08 09:48:20
- * @LastEditTime: 2020-07-15 17:10:16
+ * @LastEditTime: 2020-07-16 17:26:04
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -11,11 +11,35 @@
 -->
 <template>
   <div class="rh-table-tree el-table el-table--border">
-    <div class="hidden-columns" ref="hiddenColumns"><slot></slot></div>
-    <div class="rh-table-header el-table__header-wrapper">
-      <tt-header ref="ttHeader" :store="store" :border="border" :style="{width:layout.bodyWidth?layout.bodyWidth+'px':''}"></tt-header>
+    <div class="hidden-columns" ref="hiddenColumns">
+      <slot></slot>
     </div>
-    <div class="rh-table-wrapper" ref="bodyWrapper"></div>
+    <div class="rh-table-header el-table__header-wrapper">
+      <tt-header
+        ref="ttHeader"
+        :store="store"
+        :border="border"
+        :style="{width:layout.bodyWidth?layout.bodyWidth+'px':''}"
+      ></tt-header>
+    </div>
+    <div class="rh-table-wrapper" ref="bodyWrapper">
+      <el-tree :data="data" :props="treeProps" :node-key="nodeKey" class="tableTree" ref="myTree">
+        <template slot-scope="{node,data}">
+          <tt-body
+            ref="ttBody"
+            :node="node"
+            :layout="layout"
+            :data="data"
+            :context="context"
+            :row-class-name="rowClassName"
+            :row-style="rowStyle"
+            :highlight="highlightCurrentRow"
+            :store="store"
+            :style="{width:layout.bodyWidth?layout.bodyWidth+'px':''}"
+          ></tt-body>
+        </template>
+      </el-tree>
+    </div>
     <div class="el-table__column-resize-proxy" ref="resizeProxy" v-show="resizeProxyVisible"></div>
   </div>
 </template>
@@ -24,6 +48,7 @@
 import { data } from '@/assets/data'
 import TableTreeLayout from './layout'
 import ttHeader from './header.js'
+import ttBody from './body.js'
 import { createStore, mapStates } from './store/helper'
 import { addResizeListener } from '@/utils/resize-event'
 import { debounce, throttle } from 'throttle-debounce'
@@ -35,7 +60,8 @@ export default {
   name: 'TableTree',
 
   components: {
-    ttHeader
+    ttHeader,
+    ttBody
   },
 
   props: {
@@ -45,6 +71,19 @@ export default {
         return data
       }
     },
+
+    treeProps: {
+      default () {
+        return {
+          children: 'children',
+          label: 'label',
+          disabled: 'disabled'
+        }
+      }
+    },
+
+    nodeKey: [String],
+
     width: [String, Number],
 
     height: [String, Number],
@@ -69,6 +108,8 @@ export default {
       type: Boolean,
       default: true
     },
+
+    highlightCurrentRow: Boolean,
 
     rowClassName: [String, Function],
 
@@ -274,5 +315,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

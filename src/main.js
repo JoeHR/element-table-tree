@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-08 09:48:20
- * @LastEditTime: 2020-07-15 13:52:12
+ * @LastEditTime: 2020-07-16 15:53:42
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -12,13 +12,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
-import { Tree, Checkbox } from 'element-ui'
+import { Tree, Checkbox, Button } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.config.productionTip = false
 
 Vue.use(Tree)
 Vue.use(Checkbox)
+Vue.use(Button)
 
 new Vue({
   store,

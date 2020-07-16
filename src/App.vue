@@ -1,7 +1,7 @@
 <!--
  * @Author: rh
  * @Date: 2020-07-08 10:12:00
- * @LastEditTime: 2020-07-15 17:29:11
+ * @LastEditTime: 2020-07-16 18:52:57
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -11,19 +11,19 @@
 -->
 <template>
   <div id="app">
-    <table-tree style="height:100%;">
+    <table-tree style="height:100%;" :tree-props="treeProps" node-key="index">
       <table-tree-column label="使用单位" prop="useUnitName"></table-tree-column>
-      <table-tree-column label="区县" prop="useUnitName"></table-tree-column>
-      <table-tree-column label="街道" prop="useUnitName"></table-tree-column>
-      <table-tree-column label="电梯使用地址" prop="useUnitName"></table-tree-column>
-      <table-tree-column label="内部编号" prop="useUnitName"></table-tree-column>
-      <table-tree-column label="注册代码" prop="useUnitName"></table-tree-column>
-      <table-tree-column label="认领状态" prop="useUnitName"></table-tree-column>
-      <table-tree-column label="处理状态" prop="useUnitName"></table-tree-column>
+      <table-tree-column label="区县" prop="townName"></table-tree-column>
+      <table-tree-column label="街道" prop="streetName"></table-tree-column>
+      <table-tree-column label="电梯使用地址" prop="detailAddress"></table-tree-column>
+      <table-tree-column label="内部编号" prop="innerNo"></table-tree-column>
+      <table-tree-column label="注册代码" prop="registerCode"></table-tree-column>
+      <table-tree-column label="认领状态" prop="claimStatus"></table-tree-column>
+      <table-tree-column label="处理状态" prop="operateType"></table-tree-column>
       <table-tree-column label="是否本单位维保">
         <template slot-scope="scope">
           <el-button type="text" @click="console.log(scope)">操作</el-button>
-          <el-button type="text"  @click="console.log(scope)">撤销</el-button>
+          <el-button type="text" @click="console.log(scope)">撤销</el-button>
         </template>
       </table-tree-column>
     </table-tree>
@@ -38,12 +38,30 @@ export default {
   components: {
     tableTree,
     TableTreeColumn
+  },
+  data () {
+    return {
+      treeProps: {
+        label: 'useUnitName',
+        children: 'children',
+        disabled: (data, node) => {
+          if (!data.registerCode) {
+            return false
+          } else if (data.operateType) {
+            return true
+          } else {
+            return false
+          }
+        }
+      }
+    }
   }
 }
 </script>
 
 <style lang="scss">
-html,body{
+html,
+body {
   width: 100%;
   height: 100%;
   margin: 0;
