@@ -2,7 +2,7 @@
 import default from './components/HelloWorld';
  * @Author: rh
  * @Date: 2020-07-08 10:28:17
- * @LastEditTime: 2020-07-14 16:51:58
+ * @LastEditTime: 2020-07-27 14:48:57
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -10,7 +10,7 @@ import default from './components/HelloWorld';
  * @函数:  - 小驼峰式命名法（前缀应当为动词）
  * @这不是一个 bug，这只是一个未列出来的特性
  */
-import { parseWidth, parseMinWidth, mergeOptions, compose } from './util'
+import { parseWidth, parseMinWidth, mergeOptions, compose } from './utils/util'
 import { defaultRenderCell, treeCellPrefix, cellForced } from './config'
 
 let columnIdSeed = 1
@@ -152,7 +152,6 @@ export default {
         console.warn('[Element Warn][TableColumn]Comparing to render-header, scoped-slot header is easier to use. We recommend users to use scoped-slot header.')
       }
       const originRenderCell = column.renderCell || defaultRenderCell
-
       column.renderCell = (h, data) => {
         let children = null
         if (this.$scopedSlots.default) {

@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-08 17:28:10
- * @LastEditTime: 2020-07-15 17:12:02
+ * @LastEditTime: 2020-07-27 14:49:11
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -12,7 +12,7 @@
 // import Vue from 'vue'
 
 import { mapStates } from './store/helper'
-import { addClass, removeClass } from './util'
+import { addClass, removeClass } from './utils/util'
 import LayoutObserver from './layout-observer'
 
 // const getAllColumns = (columns) => {

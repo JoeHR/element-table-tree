@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-08 09:48:20
- * @LastEditTime: 2020-07-16 15:53:42
+ * @LastEditTime: 2020-07-27 14:46:41
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -11,15 +11,20 @@
  */
 import Vue from 'vue'
 import App from './App.vue'
-import store from './store'
-import { Tree, Checkbox, Button } from 'element-ui'
+import store from '../packages/store'
+import { Tree, Checkbox, Button, Scrollbar } from 'element-ui'
+import VueTableThree from '../packages'
 import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.config.productionTip = false
 
+console.log('VueTableThree', VueTableThree)
+
 Vue.use(Tree)
 Vue.use(Checkbox)
 Vue.use(Button)
+Vue.use(Scrollbar)
+Vue.use(VueTableThree)
 
 new Vue({
   store,

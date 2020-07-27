@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-08 13:46:57
- * @LastEditTime: 2020-07-14 16:51:37
+ * @LastEditTime: 2020-07-27 14:49:20
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -9,7 +9,7 @@
  * @函数:  - 小驼峰式命名法（前缀应当为动词）
  * @这不是一个 bug，这只是一个未列出来的特性
  */
-import { getPropByPath } from './util'
+import { getPropByPath } from './utils/util'
 
 export function defaultRenderCell (h, { row, column, $index }) {
   const property = column.property

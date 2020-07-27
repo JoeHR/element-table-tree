@@ -1,7 +1,7 @@
 <!--
  * @Author: rh
  * @Date: 2020-07-08 09:48:20
- * @LastEditTime: 2020-07-16 17:26:04
+ * @LastEditTime: 2020-07-27 15:01:44
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -15,44 +15,77 @@
       <slot></slot>
     </div>
     <div class="rh-table-header el-table__header-wrapper">
+      <div class="rh-check-header"  v-if="showCheckbox">
+        <label role="checkbox" class="el-checkbox">
+          <span aria-checked="mixed" class="el-checkbox__input">
+            <span class="el-checkbox__inner"></span>
+            <input type="checkbox" aria-hidden="true" class="el-checkbox__original" value=""/>
+          </span>
+        </label>
+      </div>
       <tt-header
         ref="ttHeader"
         :store="store"
         :border="border"
-        :style="{width:layout.bodyWidth?layout.bodyWidth+'px':''}"
+        :style="{width:layout.bodyWidth?layout.bodyWidth+'px':'',marginLeft:showCheckbox?'5px':'24px'}"
       ></tt-header>
     </div>
-    <div class="rh-table-wrapper" ref="bodyWrapper">
-      <el-tree :data="data" :props="treeProps" :node-key="nodeKey" class="tableTree" ref="myTree">
-        <template slot-scope="{node,data}">
-          <tt-body
-            ref="ttBody"
-            :node="node"
-            :layout="layout"
-            :data="data"
-            :context="context"
-            :row-class-name="rowClassName"
-            :row-style="rowStyle"
-            :highlight="highlightCurrentRow"
-            :store="store"
-            :style="{width:layout.bodyWidth?layout.bodyWidth+'px':''}"
-          ></tt-body>
-        </template>
-      </el-tree>
+    <div class="rh-table-wrapper" ref="bodyWrapper" style="height:calc(100% - 48px)">
+      <div class="table-wrapper" style="height:100%;">
+        <el-scrollbar wrapClass="scroll-wrap" viewClass="scroll-view" style="height:100%;width:100%;overflow-x:hidden;">
+          <table class="el-table-header" cellspacing="0" cellpadding="0" border="0">
+            <template v-if="showCheckbox">
+              <el-tree :data="data" show-checkbox :props="treeProps" :node-key="nodeKey" class="tableTree" ref="rhTree">
+                <template slot-scope="{node,data}">
+                  <tt-body
+                    ref="ttBody"
+                    :node="node"
+                    :layout="layout"
+                    :data="data"
+                    :context="context"
+                    :row-class-name="rowClassName"
+                    :row-style="rowStyle"
+                    :highlight="highlightCurrentRow"
+                    :store="store"
+                    :style="{width:layout.bodyWidth?layout.bodyWidth+'px':''}"
+                  ></tt-body>
+                </template>
+              </el-tree>
+            </template>
+            <template v-else>
+              <el-tree :data="data" :props="treeProps" :node-key="nodeKey" class="tableTree" ref="myTree">
+                <template slot-scope="{node,data}">
+                  <tt-body
+                    ref="ttBody"
+                    :node="node"
+                    :layout="layout"
+                    :data="data"
+                    :context="context"
+                    :row-class-name="rowClassName"
+                    :row-style="rowStyle"
+                    :highlight="highlightCurrentRow"
+                    :store="store"
+                    :style="{width:layout.bodyWidth?layout.bodyWidth+'px':''}"
+                  ></tt-body>
+                </template>
+              </el-tree>
+            </template>
+          </table>
+        </el-scrollbar>
+      </div>
     </div>
     <div class="el-table__column-resize-proxy" ref="resizeProxy" v-show="resizeProxyVisible"></div>
   </div>
 </template>
 
 <script>
-import { data } from '@/assets/data'
 import TableTreeLayout from './layout'
 import ttHeader from './header.js'
 import ttBody from './body.js'
 import { createStore, mapStates } from './store/helper'
-import { addResizeListener } from '@/utils/resize-event'
+import { addResizeListener } from './utils/resize-event'
 import { debounce, throttle } from 'throttle-debounce'
-import { parseHeight } from './util'
+import { parseHeight } from './utils/util'
 
 let tableIdSeed = 1
 
@@ -65,10 +98,15 @@ export default {
   },
 
   props: {
+    showCheckbox: {
+      type: Boolean,
+      default: false
+    },
+
     data: {
       type: Array,
       default: function () {
-        return data
+        return []
       }
     },
 
@@ -157,6 +195,10 @@ export default {
   computed: {
     bodyWrapper () {
       return this.$refs.bodyWrapper
+    },
+
+    rhTree () {
+      return this.$refs.rhTree
     },
 
     shouldUpdateHeight () {
@@ -315,4 +357,43 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.rh-table-tree{
+  .rh-table-header{
+    border-bottom: 1px solid #EBEEF5;
+    display: flex;
+    .rh-check-header{
+      padding-left: 24px;
+      padding-right: 2px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+  /deep/ .scroll-wrap{
+    height: 100%;
+    overflow-x: hidden;
+  }
+  /deep/ .el-scrollbar__bar.is-horizontal{
+      display: none;
+    }
+  /deep/ th,/deep/ td{
+    border: none;
+  }
+  /deep/ .el-tree-node__content{
+    padding-left: 0 !important;
+    min-height: 44px;
+    // height: auto;
+    border-bottom: 1px solid #EBEEF5;
+    tr{
+      // padding: 12px 0;
+      td{
+        padding: 0;
+        .cell{
+          white-space: nowrap;
+          line-height: 44px;
+        }
+      }
+    }
+  }
+}
 </style>

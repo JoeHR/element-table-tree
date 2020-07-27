@@ -1,11 +1,17 @@
 {
   "name": "vue-table-tree",
   "version": "0.1.0",
-  "private": true,
+  "description": "基于elemen-ui的table和tree组件组合而成的tableTree组件",
+  "main":"lib/vue-table-tree.umd.js",
+  "private": false,
+  "license": "MIT",
+  "author": "rhrh",
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lib": "vue-cli-service build --target lib --name vue-table-tree --dest lib packages/index.js",
+    "dist": "vue-cli-service build",
+    "pub": "npm run dist && npm publish"
   },
   "dependencies": {
     "core-js": "^3.6.5",
