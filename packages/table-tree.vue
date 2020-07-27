@@ -1,7 +1,7 @@
 <!--
  * @Author: rh
  * @Date: 2020-07-08 09:48:20
- * @LastEditTime: 2020-07-27 15:01:44
+ * @LastEditTime: 2020-07-27 16:31:55
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -358,15 +358,28 @@ export default {
 
 <style lang="scss" scoped>
 .rh-table-tree{
+  &.el-table--border{
+    border:none;
+    &::after{
+      width:0;
+    }
+  }
   .rh-table-header{
     border-bottom: 1px solid #EBEEF5;
     display: flex;
+    background: #9baabe;
     .rh-check-header{
       padding-left: 24px;
       padding-right: 2px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+    .el-table-header{
+      background: #9baabe;
+      /deep/ tr{
+          color: #fff;
+      }
     }
   }
   /deep/ .scroll-wrap{
@@ -376,8 +389,9 @@ export default {
   /deep/ .el-scrollbar__bar.is-horizontal{
       display: none;
     }
-  /deep/ th,/deep/ td{
+  /deep/ th,/deep/ td,/deep/ tr{
     border: none;
+    background:transparent;
   }
   /deep/ .el-tree-node__content{
     padding-left: 0 !important;
@@ -394,6 +408,9 @@ export default {
         }
       }
     }
+  }
+  /deep/ .scroll-wrap{
+    margin-bottom: 0;
   }
 }
 </style>

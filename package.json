@@ -1,15 +1,15 @@
 {
   "name": "rh-table-tree",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "基于elemen-ui的table和tree组件组合而成的tableTree组件",
-  "main":"lib/vue-table-tree.umd.js",
+  "main": "lib/vue-table-tree.umd.js",
   "private": false,
   "license": "MIT",
   "author": "rhrh",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lib": "vue-cli-service build --target lib --name vue-table-tree --dest lib packages/index.js",
+    "lib": "vue-cli-service build --target lib --name rh-table-tree --dest lib packages/index.js",
     "dist": "vue-cli-service build",
     "pub": "npm run dist && npm publish"
   },
@@ -17,8 +17,7 @@
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
     "throttle-debounce": "^2.2.1",
-    "vue": "^2.6.11",
-    "vuex": "^3.4.0"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",

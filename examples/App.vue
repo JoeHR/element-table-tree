@@ -1,7 +1,7 @@
 <!--
  * @Author: rh
  * @Date: 2020-07-08 10:12:00
- * @LastEditTime: 2020-07-27 15:02:11
+ * @LastEditTime: 2020-07-27 16:15:09
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -86,7 +86,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  width: 100%;
+  width: 80%;
   height: 100%;
+  margin: 0 auto;
 }
 </style>
