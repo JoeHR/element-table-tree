@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-08 17:28:10
- * @LastEditTime: 2020-07-27 14:49:11
+ * @LastEditTime: 2020-07-27 16:45:09
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -268,7 +268,6 @@ export default {
             const finalLeft = parseInt(resizeProxy.style.left, 10)
             const columnWidth = finalLeft - startColumnLeft
             column.width = column.realWidth = columnWidth
-            console.log(columnWidth)
             table.$emit('header-dragend', column.width, startLeft - startColumnLeft, column, event)
 
             this.store.scheduleLayout()

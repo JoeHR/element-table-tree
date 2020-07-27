@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-08 16:47:11
- * @LastEditTime: 2020-07-14 17:20:47
+ * @LastEditTime: 2020-07-27 16:45:44
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -41,7 +41,7 @@ export function mapStates (mapper) {
         return value.call(this, this.store.states)
       }
     } else {
-      console.error('invalid value type')
+      throw new Error('invalid value type')
     }
 
     if (fn) {

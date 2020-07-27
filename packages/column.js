@@ -2,7 +2,7 @@
 import default from './components/HelloWorld';
  * @Author: rh
  * @Date: 2020-07-08 10:28:17
- * @LastEditTime: 2020-07-27 14:48:57
+ * @LastEditTime: 2020-07-27 16:46:07
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -149,7 +149,7 @@ export default {
 
     setColumnRenders (column) {
       if (this.renderHeader) {
-        console.warn('[Element Warn][TableColumn]Comparing to render-header, scoped-slot header is easier to use. We recommend users to use scoped-slot header.')
+        throw new Error('[Element Warn][TableColumn]Comparing to render-header, scoped-slot header is easier to use. We recommend users to use scoped-slot header.')
       }
       const originRenderCell = column.renderCell || defaultRenderCell
       column.renderCell = (h, data) => {

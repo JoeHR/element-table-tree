@@ -1,6 +1,6 @@
 {
   "name": "rh-table-tree",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "基于elemen-ui的table和tree组件组合而成的tableTree组件",
   "main": "lib/vue-table-tree.umd.js",
   "private": false,
