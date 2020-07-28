@@ -2,7 +2,7 @@
 import default from './components/HelloWorld';
  * @Author: rh
  * @Date: 2020-07-08 10:28:17
- * @LastEditTime: 2020-07-27 16:46:07
+ * @LastEditTime: 2020-07-28 20:27:27
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -165,7 +165,7 @@ export default {
           style: {}
         }
         if (column.showOverflowTooltip) {
-          props.class += 'el-tooltip'
+          props.class += ' el-tooltip'
           props.style = { width: (data.column.realWidth || data.column.width) - 1 + 'px' }
         }
         return (<div {...props}>

@@ -1,7 +1,7 @@
 <!--
  * @Author: rh
  * @Date: 2020-07-08 09:48:20
- * @LastEditTime: 2020-07-28 16:03:08
+ * @LastEditTime: 2020-07-28 17:53:37
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -69,6 +69,7 @@
                 </template>
               </el-tree>
             </template>
+            <el-tooltip :effect="tooltipEffect" placement="top" ref="tooltip" :content="tooltipContent"></el-tooltip>
           </table>
         </el-scrollbar>
       </div>
@@ -190,6 +191,7 @@ export default {
     })
     return {
       layout,
+      tooltipContent: null,
       isAllSelected: false,
       isHidden: false,
       resizeProxyVisible: false,
@@ -295,6 +297,9 @@ export default {
       immediate: true,
       handler (value) {
         this.store.commit('setData', value)
+        this.$nextTick(() => {
+          this.doLayout()
+        })
       }
     },
     selection: {
@@ -445,6 +450,7 @@ export default {
         .cell{
           white-space: nowrap;
           line-height: 44px;
+          font-size: 12px;
         }
       }
     }

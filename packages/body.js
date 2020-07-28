@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-16 16:01:00
- * @LastEditTime: 2020-07-28 09:17:43
+ * @LastEditTime: 2020-07-28 20:32:48
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -12,6 +12,8 @@
 
 import { mapStates } from './store/helper'
 import LayoutObserver from './layout-observer'
+import { debounce } from 'throttle-debounce'
+import { getCell, hasClass, getStyle } from './utils/util'
 
 export default {
   name: 'ttBody',
@@ -52,6 +54,10 @@ export default {
     ...mapStates({
       columns: 'columns'
     })
+  },
+
+  created () {
+    this.activateTooltip = debounce(50, tooltip => tooltip.handleShowPopper())
   },
 
   methods: {
@@ -112,6 +118,39 @@ export default {
       return classes.join(' ')
     },
 
+    handleCellMouseEnter (event, row) {
+      const table = this.table
+      const cell = getCell(event)
+      debugger
+      const cellChild = event.target.querySelector('.cell')
+      if (!(hasClass(cellChild, 'el-tooltip') && cellChild.childNodes.length)) {
+        return
+      }
+      const range = document.createRange()
+      range.setStart(cellChild, 0)
+      range.setEnd(cellChild, cellChild.childNodes.length)
+      const rangeWidth = range.getBoundingClientRect().width
+      const padding = (parseInt(getStyle(cellChild, 'paddingLeft'), 10) || 0) + (parseInt(getStyle(cellChild, 'paddingRight'), 10) || 0)
+      if ((rangeWidth + padding > cellChild.offsetWidth || cellChild.scrollWidth > cellChild.offsetWidth) && table.$refs.tooltip) {
+        const tooltip = table.$refs.tooltip
+        table.tooltipContent = cell.innerText || cell.textContent
+        tooltip.referenceElm = cell
+        tooltip.$refs.popper && (tooltip.$refs.popper.style.display = 'none')
+        tooltip.doDestroy()
+        tooltip.setExpectedState(true)
+        this.activateTooltip(tooltip)
+      }
+    },
+
+    handleCellMouseLeave (event) {
+      const table = this.table
+      const tooltip = table.$refs.tooltip
+      if (tooltip) {
+        tooltip.setExpectedState(false)
+        tooltip.handleClosePopper()
+      }
+    },
+
     rowRender (row) {
       const { columns } = this
       return (
@@ -131,6 +170,8 @@ export default {
                   class={this.getCellClass(cellIndex, row, column)}
                   rowspan={rowspan}
                   colspan={colspan}
+                  on-mouseenter={ ($event) => this.handleCellMouseEnter($event, row) }
+                  on-mouseleave={ this.handleCellMouseLeave }
                 >
                   {
                     column.renderCell.call(

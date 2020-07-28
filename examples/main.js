@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-08 09:48:20
- * @LastEditTime: 2020-07-27 14:46:41
+ * @LastEditTime: 2020-07-28 17:50:25
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -12,7 +12,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from '../packages/store'
-import { Tree, Checkbox, Button, Scrollbar } from 'element-ui'
+import { Tree, Checkbox, Button, Scrollbar, Tooltip } from 'element-ui'
 import VueTableThree from '../packages'
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -25,6 +25,7 @@ Vue.use(Checkbox)
 Vue.use(Button)
 Vue.use(Scrollbar)
 Vue.use(VueTableThree)
+Vue.use(Tooltip)
 
 new Vue({
   store,

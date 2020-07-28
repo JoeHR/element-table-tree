@@ -3,7 +3,7 @@ import default from './components/HelloWorld';
 import { getPropByPath } from 'element-ui/src/utils/util';
  * @Author: rh
  * @Date: 2020-07-08 11:26:01
- * @LastEditTime: 2020-07-27 19:26:59
+ * @LastEditTime: 2020-07-28 20:23:50
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -11,6 +11,16 @@ import { getPropByPath } from 'element-ui/src/utils/util';
  * @函数:  - 小驼峰式命名法（前缀应当为动词）
  * @这不是一个 bug，这只是一个未列出来的特性
  */
+import Vue from 'vue'
+
+const isServer = Vue.prototype.$isServer
+const ieVersion = isServer ? 0 : Number(document.documentMode)
+
+const camelCase = function (name) {
+  return name.replace(/([:\-_]+(.))/g, function (_, separator, letter, offset) {
+    return offset ? letter.toUpperCase() : letter
+  }).replace(/^moz([A-Z])/, 'Moz$1')
+}
 
 export function parseWidth (width) {
   if (width !== undefined) {
@@ -187,4 +197,51 @@ export function toggleRowStatus (statusArr, row, newVal) {
     }
   }
   return changed
+}
+
+export function getCell (event) {
+  let cell = event.target
+
+  while (cell && cell.tagName.toUpperCase() !== 'HTML') {
+    if (cell.tagName.toUpperCase() === 'TD') {
+      return cell
+    }
+    cell = cell.parentNode
+  }
+  return null
+}
+
+export const getStyle = ieVersion < 9 ? function (element, styleName) {
+  if (isServer) return
+  if (!element || !styleName) return null
+  styleName = camelCase(styleName)
+  if (styleName === 'float') {
+    styleName = 'styleFloat'
+  }
+  try {
+    switch (styleName) {
+      case 'opacity':
+        try {
+          return element.filters.item('alpha').opacity / 100
+        } catch (e) {
+          return 1.0
+        }
+      default:
+        return (element.style[styleName] || element.currentStyle ? element.currentStyle[styleName] : null)
+    }
+  } catch (e) {
+    return element.style[styleName]
+  }
+} : function (element, styleName) {
+  if (isServer) return
+  if (!element || !styleName) return null
+  if (styleName === 'float') {
+    styleName = 'cssFloat'
+  }
+  try {
+    var computed = document.defaultView.getComputedStyle(element, '')
+    return element.style[styleName] || computed ? computed[styleName] : null
+  } catch (e) {
+    return element.style[styleName]
+  }
 }
