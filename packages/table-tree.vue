@@ -1,7 +1,7 @@
 <!--
  * @Author: rh
  * @Date: 2020-07-08 09:48:20
- * @LastEditTime: 2020-07-28 15:11:26
+ * @LastEditTime: 2020-07-28 16:03:08
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -34,7 +34,7 @@
         <el-scrollbar wrapClass="scroll-wrap" viewClass="scroll-view" style="height:100%;width:100%;overflow-x:hidden;">
           <table class="el-table-header" cellspacing="0" cellpadding="0" border="0">
             <template v-if="showCheckbox">
-              <el-tree :data="data" show-checkbox :props="treeProps" :node-key="nodeKey" class="tableTree" ref="rhTree" @check-change="checkChange">
+              <el-tree :data="data" show-checkbox :defaultExpandAll="defaultExpandAll" :props="treeProps" :node-key="nodeKey" class="tableTree" ref="rhTree" @check-change="checkChange">
                 <template slot-scope="{node,data}">
                   <tt-body
                     ref="ttBody"
@@ -52,7 +52,7 @@
               </el-tree>
             </template>
             <template v-else>
-              <el-tree :data="data" :props="treeProps" :node-key="nodeKey" class="tableTree" ref="rhTree" @check-change="checkChange">
+              <el-tree :data="data" :props="treeProps" :defaultExpandAll="defaultExpandAll" :node-key="nodeKey" class="tableTree" ref="rhTree" @check-change="checkChange">
                 <template slot-scope="{node,data}">
                   <tt-body
                     ref="ttBody"
@@ -210,6 +210,10 @@ export default {
       return this.$refs.rhTree
     },
 
+    selection () {
+      return this.store.states.selection
+    },
+
     shouldUpdateHeight () {
       return this.height || this.maxHeight || this.fixedColumns.length > 0 || this.rightFixedColumns.length > 0
     },
@@ -291,6 +295,13 @@ export default {
       immediate: true,
       handler (value) {
         this.store.commit('setData', value)
+      }
+    },
+    selection: {
+      immediate: false,
+      deep: false,
+      handler (value) {
+        this.$emit('select-change', value)
       }
     }
   },
