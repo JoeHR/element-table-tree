@@ -3,7 +3,7 @@ import default from './components/HelloWorld';
 import { getPropByPath } from 'element-ui/src/utils/util';
  * @Author: rh
  * @Date: 2020-07-08 11:26:01
- * @LastEditTime: 2020-07-15 15:33:33
+ * @LastEditTime: 2020-07-27 19:26:59
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -156,4 +156,35 @@ export function removeClass (el, cls) {
   if (!el.classList) {
     el.className = trim(curClass)
   }
-};
+}
+
+export function toggleRowStatus (statusArr, row, newVal) {
+  let changed = false
+  const index = statusArr.indexOf(row)
+  const included = index !== -1
+
+  const addRow = () => {
+    statusArr.push(row)
+    changed = true
+  }
+
+  const removeRow = () => {
+    statusArr.splice(index, 1)
+    changed = true
+  }
+
+  if (typeof newVal === 'boolean') {
+    if (newVal && !included) {
+      addRow()
+    } else if (!newVal && included) {
+      removeRow()
+    }
+  } else {
+    if (included) {
+      removeRow()
+    } else {
+      addRow()
+    }
+  }
+  return changed
+}

@@ -1,7 +1,7 @@
 <!--
  * @Author: rh
  * @Date: 2020-07-08 09:48:20
- * @LastEditTime: 2020-07-27 16:31:55
+ * @LastEditTime: 2020-07-28 15:11:26
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -16,12 +16,11 @@
     </div>
     <div class="rh-table-header el-table__header-wrapper">
       <div class="rh-check-header"  v-if="showCheckbox">
-        <label role="checkbox" class="el-checkbox">
-          <span aria-checked="mixed" class="el-checkbox__input">
-            <span class="el-checkbox__inner"></span>
-            <input type="checkbox" aria-hidden="true" class="el-checkbox__original" value=""/>
-          </span>
-        </label>
+        <el-checkbox
+          :disabled="store.states.data && store.states.data.length === 0"
+          :indeterminate="store.states.selection.length > 0 && !isAllSelected"
+          @click.native="toggleAllSelection"
+          v-model="isAllSelected"/>
       </div>
       <tt-header
         ref="ttHeader"
@@ -35,7 +34,7 @@
         <el-scrollbar wrapClass="scroll-wrap" viewClass="scroll-view" style="height:100%;width:100%;overflow-x:hidden;">
           <table class="el-table-header" cellspacing="0" cellpadding="0" border="0">
             <template v-if="showCheckbox">
-              <el-tree :data="data" show-checkbox :props="treeProps" :node-key="nodeKey" class="tableTree" ref="rhTree">
+              <el-tree :data="data" show-checkbox :props="treeProps" :node-key="nodeKey" class="tableTree" ref="rhTree" @check-change="checkChange">
                 <template slot-scope="{node,data}">
                   <tt-body
                     ref="ttBody"
@@ -53,7 +52,7 @@
               </el-tree>
             </template>
             <template v-else>
-              <el-tree :data="data" :props="treeProps" :node-key="nodeKey" class="tableTree" ref="myTree">
+              <el-tree :data="data" :props="treeProps" :node-key="nodeKey" class="tableTree" ref="rhTree" @check-change="checkChange">
                 <template slot-scope="{node,data}">
                   <tt-body
                     ref="ttBody"
@@ -166,13 +165,22 @@ export default {
     indent: {
       type: Number,
       default: 16
+    },
+
+    defaultExpandAll: Boolean,
+
+    selectOnIndeterminate: {
+      type: Boolean,
+      default: true
     }
 
   },
 
   data () {
     this.store = createStore(this, {
-      rowKey: this.rowKey
+      rowKey: this.rowKey,
+      defaultExpandAll: this.defaultExpandAll,
+      selectOnIndeterminate: this.selectOnIndeterminate
     })
     const layout = new TableTreeLayout({
       store: this.store,
@@ -182,13 +190,14 @@ export default {
     })
     return {
       layout,
+      isAllSelected: false,
       isHidden: false,
       resizeProxyVisible: false,
       resizeState: {
         width: null,
         height: null
-      }
-      // store: this.store
+      },
+      store: this.store
     }
   },
 
@@ -277,6 +286,15 @@ export default {
     })
   },
 
+  watch: {
+    data: {
+      immediate: true,
+      handler (value) {
+        this.store.commit('setData', value)
+      }
+    }
+  },
+
   created () {
     this.tableId = 'el-table_' + tableIdSeed++
     this.debouncedUpdateLayout = debounce(50, () => this.doLayout())
@@ -350,6 +368,17 @@ export default {
         this.layout.updateElsHeight()
       }
       this.layout.updateColumnsWidth()
+    },
+
+    toggleAllSelection (event) {
+      event.stopPropagation()
+      this.store.commit('toggleAllSelection')
+    },
+
+    checkChange (dataNode, isCheck, childHasCheck) {
+      const rhTree = this.rhTree
+      this.store.updateAllSelected()
+      throttle(100, () => this.$emit('check-change', dataNode, isCheck, childHasCheck, rhTree))
     }
   }
 
@@ -410,7 +439,7 @@ export default {
     }
   }
   /deep/ .scroll-wrap{
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-08 17:45:32
- * @LastEditTime: 2020-07-15 15:51:09
+ * @LastEditTime: 2020-07-28 15:03:47
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -27,6 +27,12 @@ export default Vue.extend({
   data () {
     return {
       states: {
+        rowKey: null,
+        data: [],
+        isAllSelected: false,
+        selection: [],
+        selectOnIndeterminate: false,
+        selectable: null,
         // 列
         _columns: [], // 不可响应的
         originColumns: [],
@@ -40,6 +46,7 @@ export default Vue.extend({
   mixins: [],
 
   methods: {
+
     // 更新列
     updateColumns () {
       const states = this.states
@@ -72,6 +79,57 @@ export default Vue.extend({
         this.updateColumns()
       }
       this.table.debouncedUpdateLayout()
+    },
+
+    _toggleAllSelection () {
+      const { table, states } = this
+      const { rhTree } = table
+      table.$nextTick(() => {
+        const { data } = states
+        if (table.isAllSelected) {
+          rhTree.setCheckedNodes(data)
+        } else {
+          rhTree.setCheckedNodes([])
+          states.selection = []
+        }
+        this.table.$emit('select-all', states.selection)
+      })
+    },
+
+    clearSelection () {
+      const states = this.states
+      states.isAllSelected = false
+      const oldSelection = states.selection
+      if (oldSelection.length) {
+        states.selection = []
+        this.table.$emit('check-change', [])
+      }
+    },
+
+    updateAllSelected () {
+      const { states } = this
+      const table = this.table
+      table.$nextTick(() => {
+        const { rhTree } = table
+        const { data } = states
+        const halfCheckedNodes = rhTree.getHalfCheckedNodes()
+        const checkedNodes = rhTree.getCheckedNodes()
+        const checkedLeafNodes = rhTree.getCheckedNodes(true)
+        const level1DisLen = checkedNodes.length - checkedLeafNodes.length
+        if (halfCheckedNodes.length) {
+          table.isAllSelected = false
+        } else if (!halfCheckedNodes.length && level1DisLen === data.length) {
+          table.isAllSelected = true
+        } else if (!halfCheckedNodes.length && !checkedNodes.length) {
+          table.isAllSelected = false
+        } else {
+          table.isAllSelected = false
+        }
+        states.selection = checkedNodes
+        if (table.isAllSelected) {
+          table.$emit('select-all', states.selection)
+        }
+      })
     }
   }
 

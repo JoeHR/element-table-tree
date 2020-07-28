@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-16 16:01:00
- * @LastEditTime: 2020-07-27 15:00:06
+ * @LastEditTime: 2020-07-28 09:17:43
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -13,76 +13,13 @@
 import { mapStates } from './store/helper'
 import LayoutObserver from './layout-observer'
 
-// const convertToRows = (originColumns) => {
-//   let maxLevel = 1
-//   const traverse = (column, parent) => {
-//     if (parent) {
-//       column.level = parent.level + 1
-//       if (maxLevel < column.level) {
-//         maxLevel = column.level
-//       }
-//     }
-//     column.colspan = 1
-//   }
-
-//   originColumns.forEach(column => {
-//     column.level = 1
-//     traverse(column)
-//   })
-
-//   const rows = []
-//   for (let i = 0; i < maxLevel; i++) {
-//     rows.push([])
-//   }
-
-//   // const allColumns = getAllColumns(originColumns)
-//   const allColumns = originColumns
-
-//   allColumns.forEach(column => {
-//     if (!column.children) {
-//       column.colspan = maxLevel - column.level + 1
-//     } else {
-//       column.rowspan = 1
-//     }
-//     rows[column.level - 1].push(column)
-//   })
-
-//   return rows
-// }
-
 export default {
   name: 'ttBody',
 
   mixins: [LayoutObserver],
 
   render (h) {
-    // const store = this.store
-    // const { rowKey } = store
-    // const orginColumns = this.store.states.originColumns
-    // const columnRows = convertToRows(orginColumns, this.columns)
     return this.rowRender(this.data)
-    // <tr class="tr table-tree-item" style="display:flex;flex-wrap:nowrap;height:100%;box-sizing:border-box;">
-    //   {
-    //     this._l(columnRows, (columns, rowIndex) =>
-    //       columns.map((column, cellIndex) => (
-    //         <td class="td"
-    //           style={{ width: column.realWidth + 'px', 'border-bottom': 'none' }}
-    //           colspan={ column.colspan }
-    //         >
-    //           <div class="cell">
-    //             {
-    //               column.renderCell.call(
-    //                 this._renderProxy,
-    //                 this.$createElement,
-    //                 this.data
-    //               )
-    //             }
-    //           </div>
-    //         </td>
-    //       ))
-    //     )
-    //   }
-    // </tr>
   },
 
   props: {
@@ -176,8 +113,6 @@ export default {
     },
 
     rowRender (row) {
-      // const orginColumns = this.store.states.originColumns
-      // const columnRows = convertToRows(orginColumns, this.columns)
       const { columns } = this
       return (
         <tr class="tr table-tree-item" style="display:flex;flex-wrap:nowrap;height:100%;box-sizing:border-box;">

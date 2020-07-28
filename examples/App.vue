@@ -1,7 +1,7 @@
 <!--
  * @Author: rh
  * @Date: 2020-07-08 10:12:00
- * @LastEditTime: 2020-07-27 16:15:09
+ * @LastEditTime: 2020-07-28 15:02:06
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -11,7 +11,7 @@
 -->
 <template>
   <div id="app">
-    <table-tree style="height:100%;" :tree-props="treeProps" node-key="index" showCheckbox :data="data">
+    <table-tree style="height:100%;" :tree-props="treeProps" node-key="index" showCheckbox :data="data" @check-change="checkChange">
       <table-tree-column label="使用单位" prop="useUnitName"></table-tree-column>
       <table-tree-column label="区县" prop="townName"></table-tree-column>
       <table-tree-column label="街道" prop="streetName"></table-tree-column>
@@ -67,6 +67,12 @@ export default {
   methods: {
     showClick (data) {
       console.log(data)
+    },
+    checkChange (dataNode, isCheck, childHasCheck, rhTree) {
+      console.log('checkChange -> rhTree', rhTree)
+      console.log('checkChange -> childHasCheck', childHasCheck)
+      console.log('checkChange -> isCheck', isCheck)
+      console.log('checkChange -> dataNode', dataNode)
     }
   }
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-08 16:47:11
- * @LastEditTime: 2020-07-27 16:45:44
+ * @LastEditTime: 2020-07-28 09:12:12
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -11,6 +11,7 @@
  */
 import Store from './index'
 // import debounce from 'throttle-debounce/debounce'
+import { debounce } from 'throttle-debounce'
 
 export function createStore (table, initialState = {}) {
   if (!table) {
@@ -20,6 +21,8 @@ export function createStore (table, initialState = {}) {
   const store = new Store()
 
   store.table = table
+
+  store.toggleAllSelection = debounce(10, store._toggleAllSelection)
 
   Object.keys(initialState).forEach(key => {
     store.states[key] = initialState[key]

@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-08 09:48:20
- * @LastEditTime: 2020-07-14 16:54:48
+ * @LastEditTime: 2020-07-28 14:38:32
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -12,6 +12,20 @@
 import Watcher from './watcher'
 
 Watcher.prototype.mutations = {
+
+  setData (states, data) {
+    const dataInstanceChanged = states._data !== data
+    states._data = data
+    states.data = data
+
+    if (dataInstanceChanged) {
+      this.clearSelection()
+    } else {
+      this.cleanSelection()
+    }
+
+    this.updateAllSelected()
+  },
 
   insertColumn (states, column, index, parent) {
     let array = states._columns
@@ -29,7 +43,12 @@ Watcher.prototype.mutations = {
     if (this.table.$ready) {
       this.updateColumns()
     }
+  },
+
+  toggleAllSelection () {
+    this.toggleAllSelection()
   }
+
 }
 
 Watcher.prototype.commit = function (name, ...args) {
