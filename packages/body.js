@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-16 16:01:00
- * @LastEditTime: 2020-07-28 20:32:48
+ * @LastEditTime: 2020-07-30 15:58:05
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -121,7 +121,6 @@ export default {
     handleCellMouseEnter (event, row) {
       const table = this.table
       const cell = getCell(event)
-      debugger
       const cellChild = event.target.querySelector('.cell')
       if (!(hasClass(cellChild, 'el-tooltip') && cellChild.childNodes.length)) {
         return
