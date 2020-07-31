@@ -1,7 +1,7 @@
 <!--
  * @Author: rh
  * @Date: 2020-07-08 10:12:00
- * @LastEditTime: 2020-07-28 20:26:31
+ * @LastEditTime: 2020-07-31 11:39:40
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import { data } from './assets/data'
+// import { data } from './assets/data'
 export default {
   name: 'App',
   filters: {
@@ -48,7 +48,7 @@ export default {
   },
   data () {
     return {
-      data: data,
+      data: [],
       treeProps: {
         label: 'useUnitName',
         children: 'children',
