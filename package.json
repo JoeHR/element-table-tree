@@ -1,6 +1,6 @@
 {
   "name": "rh-table-tree",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "基于elemen-ui的table和tree组件组合而成的tableTree组件",
   "main": "lib/rh-table-tree.umd.js",
   "private": false,
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "element-ui": "^2.13.2",
+    "element-ui": "^2.8.2",
     "throttle-debounce": "^2.2.1",
     "vue": "^2.6.11"
   },
