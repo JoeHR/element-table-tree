@@ -1,7 +1,7 @@
 <!--
  * @Author: rh
  * @Date: 2020-07-08 09:48:20
- * @LastEditTime: 2020-07-28 17:53:37
+ * @LastEditTime: 2020-07-31 11:41:51
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -32,7 +32,7 @@
     <div class="rh-table-wrapper" ref="bodyWrapper" style="height:calc(100% - 48px)">
       <div class="table-wrapper" style="height:100%;">
         <el-scrollbar wrapClass="scroll-wrap" viewClass="scroll-view" style="height:100%;width:100%;overflow-x:hidden;">
-          <table class="el-table-header" cellspacing="0" cellpadding="0" border="0">
+          <table class="el-table-header" cellspacing="0" cellpadding="0" border="0" style="width:100%;">
             <template v-if="showCheckbox">
               <el-tree :data="data" show-checkbox :defaultExpandAll="defaultExpandAll" :props="treeProps" :node-key="nodeKey" class="tableTree" ref="rhTree" @check-change="checkChange">
                 <template slot-scope="{node,data}">
