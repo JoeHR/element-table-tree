@@ -1,7 +1,7 @@
 /*
  * @Author: rh
  * @Date: 2020-07-08 17:45:32
- * @LastEditTime: 2020-07-28 16:02:48
+ * @LastEditTime: 2020-07-31 11:45:49
  * @LastEditors: rh
  * @Description: 命名规范
  * @变量: - 小驼峰式命名法（前缀应当是名词）
@@ -118,7 +118,7 @@ export default Vue.extend({
         const level1DisLen = checkedNodes.length - checkedLeafNodes.length
         if (halfCheckedNodes.length) {
           table.isAllSelected = false
-        } else if (!halfCheckedNodes.length && level1DisLen === data.length) {
+        } else if (!halfCheckedNodes.length && level1DisLen === data.length && data.length) {
           table.isAllSelected = true
         } else if (!halfCheckedNodes.length && !checkedNodes.length) {
           table.isAllSelected = false
